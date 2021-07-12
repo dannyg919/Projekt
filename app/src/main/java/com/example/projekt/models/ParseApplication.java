@@ -1,4 +1,4 @@
-package com.example.projekt;
+package com.example.projekt.models;
 
 import android.app.Application;
 

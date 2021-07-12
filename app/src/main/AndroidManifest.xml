@@ -12,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Projekt"
-        android:name=".ParseApplication">
+        android:name=".models.ParseApplication">
 
         <activity android:name=".RegisterActivity"></activity>
         <activity android:name=".LoginActivity">
