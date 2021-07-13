@@ -10,7 +10,7 @@ import com.parse.ParseUser;
 public class Projekt extends ParseObject {
     public static final String KEY_DESCRIPTION = "description";
     public static final String KEY_NAME = "name";
-    public static final String KEY_OWNER = "user";
+    public static final String KEY_OWNER = "owner";
 
     public String getDescription(){
         return getString(KEY_DESCRIPTION);
