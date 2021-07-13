@@ -1,15 +1,18 @@
 package com.example.projekt.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.projekt.NewProjektActivity;
 import com.example.projekt.R;
 import com.example.projekt.models.Projekt;
 
@@ -24,22 +27,51 @@ public class ProjektsAdapter extends RecyclerView.Adapter<ProjektsAdapter.ViewHo
         this.projekts = projekts;
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        return (position == projekts.size()) ? R.layout.item_add_projekt : R.layout.item_projekt;
+    }
+
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_projekt, parent, false);
+        View view;
+
+        if(viewType == R.layout.item_projekt){
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_projekt, parent, false);
+
+        }
+        //If last in list we want to add this button.
+        else {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_add_projekt, parent, false);
+        }
+
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ProjektsAdapter.ViewHolder holder, int position) {
-        Projekt projekt = projekts.get(position);
-        holder.bind(projekt);
+        if(position == projekts.size()) {
+            holder.tvAddProjekt.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent i = new Intent(context, NewProjektActivity.class);
+                    context.startActivity(i);
+
+
+                }
+            });
+        }
+        else {
+            Projekt projekt = projekts.get(position);
+            holder.bind(projekt);
+        }
     }
 
     @Override
     public int getItemCount() {
-        return projekts.size();
+        return projekts.size() +1;
     }
 
     public void clear() {
@@ -56,11 +88,13 @@ public class ProjektsAdapter extends RecyclerView.Adapter<ProjektsAdapter.ViewHo
 
     class ViewHolder extends RecyclerView.ViewHolder{
         private TextView tvProjektName;
+        private TextView tvAddProjekt;
 
 
         public ViewHolder(@NonNull View itemView){
             super(itemView);
             tvProjektName = itemView.findViewById(R.id.tvProjektName);
+            tvAddProjekt = itemView.findViewById(R.id.tvAddProjekt);
 
         }
 
