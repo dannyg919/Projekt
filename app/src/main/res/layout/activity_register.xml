@@ -33,7 +33,7 @@
     </EditText>
 
     <EditText
-        android:id="@+id/etUsername"
+        android:id="@+id/etProjektName"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -48,7 +48,7 @@
         android:id="@+id/etDescription"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/etUsername"
+        android:layout_below="@+id/etProjektName"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="8dp"
         android:hint="Password"

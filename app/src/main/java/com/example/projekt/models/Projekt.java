@@ -12,25 +12,28 @@ public class Projekt extends ParseObject {
     public static final String KEY_NAME = "name";
     public static final String KEY_OWNER = "owner";
 
-    public String getDescription(){
+    public String getDescription() {
         return getString(KEY_DESCRIPTION);
     }
-    public void setDescription(String description){
-        put(KEY_DESCRIPTION,description);
+
+    public void setDescription(String description) {
+        put(KEY_DESCRIPTION, description);
     }
 
-    public String getName(){
+    public String getName() {
         return getString(KEY_NAME);
     }
-    public void setName(String description){
-        put(KEY_NAME,description);
+
+    public void setName(String description) {
+        put(KEY_NAME, description);
     }
 
-    public ParseUser getUser(){
+    public ParseUser getUser() {
         return getParseUser(KEY_OWNER);
     }
-    public void setUser(ParseUser user){
-        put(KEY_OWNER,user);
+
+    public void setUser(ParseUser user) {
+        put(KEY_OWNER, user);
     }
 
 }

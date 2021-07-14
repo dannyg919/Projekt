@@ -31,7 +31,7 @@ public class RegisterActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
-        etUsername = findViewById(R.id.etUsername);
+        etUsername = findViewById(R.id.etProjektName);
         etPassword = findViewById(R.id.etDescription);
         etPasswordConfirm = findViewById(R.id.etPasswordConfirm);
         etEmail = findViewById(R.id.etEmail);
@@ -41,7 +41,7 @@ public class RegisterActivity extends AppCompatActivity {
         tvLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(RegisterActivity.this,LoginActivity.class);
+                Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
                 startActivity(i);
                 finish();
             }
@@ -55,10 +55,10 @@ public class RegisterActivity extends AppCompatActivity {
                 String passwordConfirm = etPasswordConfirm.getText().toString();
                 String email = etEmail.getText().toString();
 
-                if (password.length() < 8 ) {
-                    Toast.makeText(RegisterActivity.this,"Password must be at least 8 characters!",Toast.LENGTH_SHORT).show();
+                if (password.length() < 8) {
+                    Toast.makeText(RegisterActivity.this, "Password must be at least 8 characters!", Toast.LENGTH_SHORT).show();
                 } else if (!(password.equals(passwordConfirm))) {
-                    Toast.makeText(RegisterActivity.this,"Passwords must match!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, "Passwords must match!", Toast.LENGTH_SHORT).show();
                 } else {
                     ParseUser user = new ParseUser();
                     // Set core properties

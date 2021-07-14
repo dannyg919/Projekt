@@ -26,7 +26,8 @@ public class ProjektFragment extends Fragment {
     protected RecyclerView rvProjekts;
     protected ProjektsAdapter projektAdapter;
 
-    public ProjektFragment(){}
+    public ProjektFragment() {
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
@@ -50,7 +51,7 @@ public class ProjektFragment extends Fragment {
         ParseQuery<Projekt> query = ParseQuery.getQuery(Projekt.class);
         // show only projekts for this user
         ParseUser user = ParseUser.getCurrentUser();
-        query.whereEqualTo(Projekt.KEY_OWNER,user);
+        query.whereEqualTo(Projekt.KEY_OWNER, user);
 
         // order posts by creation date (newest first)
         query.addDescendingOrder("createdAt");

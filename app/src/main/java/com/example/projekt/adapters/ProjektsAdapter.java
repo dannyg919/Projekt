@@ -5,14 +5,12 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.projekt.NewProjektActivity;
+import com.example.projekt.AddProjektActivity;
 import com.example.projekt.R;
 import com.example.projekt.models.Projekt;
 
@@ -22,7 +20,7 @@ public class ProjektsAdapter extends RecyclerView.Adapter<ProjektsAdapter.ViewHo
     private Context context;
     private List<Projekt> projekts;
 
-    public ProjektsAdapter(Context context, List<Projekt> projekts){
+    public ProjektsAdapter(Context context, List<Projekt> projekts) {
         this.context = context;
         this.projekts = projekts;
     }
@@ -38,7 +36,7 @@ public class ProjektsAdapter extends RecyclerView.Adapter<ProjektsAdapter.ViewHo
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view;
 
-        if(viewType == R.layout.item_projekt){
+        if (viewType == R.layout.item_projekt) {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_projekt, parent, false);
 
         }
@@ -52,18 +50,17 @@ public class ProjektsAdapter extends RecyclerView.Adapter<ProjektsAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ProjektsAdapter.ViewHolder holder, int position) {
-        if(position == projekts.size()) {
+        if (position == projekts.size()) {
             holder.tvAddProjekt.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent i = new Intent(context, NewProjektActivity.class);
+                    Intent i = new Intent(context, AddProjektActivity.class);
                     context.startActivity(i);
 
 
                 }
             });
-        }
-        else {
+        } else {
             Projekt projekt = projekts.get(position);
             holder.bind(projekt);
         }
@@ -71,7 +68,7 @@ public class ProjektsAdapter extends RecyclerView.Adapter<ProjektsAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return projekts.size() +1;
+        return projekts.size() + 1;
     }
 
     public void clear() {
@@ -86,19 +83,19 @@ public class ProjektsAdapter extends RecyclerView.Adapter<ProjektsAdapter.ViewHo
         notifyDataSetChanged();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder{
+    class ViewHolder extends RecyclerView.ViewHolder {
         private TextView tvProjektName;
         private TextView tvAddProjekt;
 
 
-        public ViewHolder(@NonNull View itemView){
+        public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvProjektName = itemView.findViewById(R.id.tvProjektName);
             tvAddProjekt = itemView.findViewById(R.id.tvAddProjekt);
 
         }
 
-        public void bind(Projekt projekt){
+        public void bind(Projekt projekt) {
             tvProjektName.setText(projekt.getName());
         }
 
