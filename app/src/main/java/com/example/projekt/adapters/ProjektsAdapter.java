@@ -11,8 +11,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.projekt.AddProjektActivity;
+import com.example.projekt.ProjektActivity;
 import com.example.projekt.R;
 import com.example.projekt.models.Projekt;
+
+import org.parceler.Parcels;
 
 import java.util.List;
 
@@ -97,6 +100,15 @@ public class ProjektsAdapter extends RecyclerView.Adapter<ProjektsAdapter.ViewHo
 
         public void bind(Projekt projekt) {
             tvProjektName.setText(projekt.getName());
+            tvProjektName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(context, ProjektActivity.class);
+                    i.putExtra("DETAILS", Parcels.wrap(projekt));
+                    context.startActivity(i);
+
+                }
+            });
         }
 
     }

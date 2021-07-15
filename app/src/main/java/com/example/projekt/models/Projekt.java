@@ -24,8 +24,8 @@ public class Projekt extends ParseObject {
         return getString(KEY_NAME);
     }
 
-    public void setName(String description) {
-        put(KEY_NAME, description);
+    public void setName(String name) {
+        put(KEY_NAME, name);
     }
 
     public ParseUser getUser() {

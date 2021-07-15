@@ -12,6 +12,7 @@ public class ParseApplication extends Application {
         super.onCreate();
 
         ParseObject.registerSubclass(Projekt.class);
+        ParseObject.registerSubclass(Card.class);
 
         Parse.initialize(new Parse.Configuration.Builder(this)
                 .applicationId("omymch9acwgh4ZeW9X3T34ATaRPRY40EyCqA6PKc")
