@@ -10,6 +10,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="22dp"
+        android:clickable="true"
         android:text="+ New Card"
         android:textColor="#8BC34A"
         android:textSize="16sp"

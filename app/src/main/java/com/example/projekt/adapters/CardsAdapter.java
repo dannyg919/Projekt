@@ -1,10 +1,13 @@
 package com.example.projekt.adapters;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,6 +17,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.projekt.AddProjektActivity;
 import com.example.projekt.R;
 import com.example.projekt.models.Card;
+import com.example.projekt.models.Projekt;
+import com.parse.ParseException;
+import com.parse.SaveCallback;
 
 
 import java.util.List;
@@ -21,10 +27,12 @@ import java.util.List;
 public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> {
     private Context context;
     private List<Card> cards;
+    private Projekt projekt;
 
-    public CardsAdapter(Context context, List<Card> cards) {
+    public CardsAdapter(Context context, List<Card> cards, Projekt projekt) {
         this.context = context;
         this.cards = cards;
+        this.projekt = projekt;
     }
 
     @Override
@@ -57,9 +65,39 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> 
             holder.tvNewCard.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(context, "New card added!", Toast.LENGTH_SHORT).show();
+                    //Create Dialog box to create new card
+                    final EditText cardEditText = new EditText(context);
+                    AlertDialog dialog = new AlertDialog.Builder(context)
+                            .setTitle("Add a new card")
+                            .setView(cardEditText)
 
+                            .setPositiveButton("Add", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    Card card = new Card();
+                                    card.setName(String.valueOf(cardEditText.getText()));
+                                    card.setProjekt(projekt);
+
+                                    card.saveInBackground(new SaveCallback() {
+                                        @Override
+                                        public void done(ParseException e) {
+                                            if (e != null) {
+                                                Toast.makeText(context, "Error while saving!", Toast.LENGTH_SHORT).show();
+                                            }
+
+                                        }
+                                    });
+
+                                }
+                            })
+
+                            .setNegativeButton("Cancel", null)
+                            .create();
+                    dialog.show();
                 }
+
+
             });
         } else {
 

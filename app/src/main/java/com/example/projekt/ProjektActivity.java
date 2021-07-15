@@ -45,7 +45,7 @@ public class ProjektActivity extends AppCompatActivity {
         tvProjektName.setText(projekt.getName());
 
         allCards = new ArrayList<>();
-        cardsAdapter = new CardsAdapter(this, allCards);
+        cardsAdapter = new CardsAdapter(this, allCards, projekt);
         rvCards.setAdapter(cardsAdapter);
         rvCards.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
@@ -64,7 +64,7 @@ public class ProjektActivity extends AppCompatActivity {
         query.whereEqualTo(Card.KEY_PROJEKT, projekt);
 
         // order posts by creation date (newest first)
-        query.addDescendingOrder("createdAt");
+        query.addAscendingOrder("createdAt");
         // start an asynchronous call for posts
         query.findInBackground(new FindCallback<Card>() {
             @Override
