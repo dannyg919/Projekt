@@ -12,16 +12,22 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.projekt.AddProjektActivity;
 import com.example.projekt.R;
 import com.example.projekt.models.Card;
 import com.example.projekt.models.Projekt;
+import com.example.projekt.models.Task;
+import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseQuery;
 import com.parse.SaveCallback;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> {
@@ -129,19 +135,57 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> 
         private TextView tvNewCard;
         private RecyclerView rvTasks;
 
+        private List<Task> allTasks;
+        private TasksAdapter tasksAdapter;
+
+
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvCardName = itemView.findViewById(R.id.tvCardName);
             tvNewCard = itemView.findViewById(R.id.tvNewCard);
-            //rvTasks = itemView.findViewById(R.id.rvTasks);
+            rvTasks = itemView.findViewById(R.id.rvTasks);
 
         }
 
         public void bind(Card card) {
             tvCardName.setText(card.getName());
 
+            allTasks = new ArrayList<>();
+            tasksAdapter = new TasksAdapter(context, allTasks, card);
+            rvTasks.setAdapter(tasksAdapter);
+            rvTasks.setLayoutManager(new GridLayoutManager(context,2));
+
+            queryTasks(card);
+
+
         }
+
+        private void queryTasks(Card card) {
+            ParseQuery<Task> query = ParseQuery.getQuery(Task.class);
+
+            query.whereEqualTo(Task.KEY_CARD, card);
+
+            // order posts by creation date (newest first)
+            query.addAscendingOrder("createdAt");
+            // start an asynchronous call for posts
+            query.findInBackground(new FindCallback<Task>() {
+                @Override
+                public void done(List<Task> tasks, ParseException e) {
+                    // check for errors
+                    if (e != null) {
+                        return;
+                    }
+
+
+                    allTasks.addAll(tasks);
+                    tasksAdapter.notifyDataSetChanged();
+                }
+            });
+
+        }
+
+
     }
 
 }

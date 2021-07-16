@@ -13,6 +13,7 @@ public class ParseApplication extends Application {
 
         ParseObject.registerSubclass(Projekt.class);
         ParseObject.registerSubclass(Card.class);
+        ParseObject.registerSubclass(Task.class);
 
         Parse.initialize(new Parse.Configuration.Builder(this)
                 .applicationId("omymch9acwgh4ZeW9X3T34ATaRPRY40EyCqA6PKc")

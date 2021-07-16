@@ -54,6 +54,7 @@ public class AddProjektActivity extends AppCompatActivity {
                     Toast.makeText(AddProjektActivity.this, "Error while saving!", Toast.LENGTH_SHORT).show();
                 }
                 etProjektName.setText("");
+
                 //TODO: Take user to newly created projekt
             }
         });
