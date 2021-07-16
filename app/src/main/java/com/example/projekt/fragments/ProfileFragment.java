@@ -1,15 +1,23 @@
 package com.example.projekt.fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
 import com.example.projekt.R;
+import com.parse.ParseFile;
+import com.parse.ParseUser;
 
 public class ProfileFragment extends Fragment {
+    TextView tvUsername;
+    ImageView ivProfilePicture;
 
     public ProfileFragment() {
     }
@@ -22,6 +30,20 @@ public class ProfileFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
+        tvUsername = view.findViewById(R.id.tvUsername);
+        ivProfilePicture = view.findViewById(R.id.ivProfilePicture);
+
+        ParseUser user = ParseUser.getCurrentUser();
+        tvUsername.setText(user.getUsername());
+
+
+        Glide.with(getContext())
+                .load(user.getParseFile("profilePicture").getUrl())
+                .circleCrop()
+                .into(ivProfilePicture);
+
+
+
 
     }
 

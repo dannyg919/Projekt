@@ -59,13 +59,10 @@ public class ProjektActivity extends AppCompatActivity {
 
     private void queryCards() {
         ParseQuery<Card> query = ParseQuery.getQuery(Card.class);
-        // show only projekts for this user
 
         query.whereEqualTo(Card.KEY_PROJEKT, projekt);
 
-        // order posts by creation date (newest first)
         query.addAscendingOrder("createdAt");
-        // start an asynchronous call for posts
         query.findInBackground(new FindCallback<Card>() {
             @Override
             public void done(List<Card> cards, ParseException e) {
