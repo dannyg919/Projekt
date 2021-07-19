@@ -21,12 +21,12 @@ import com.parse.SaveCallback;
 
 import java.util.List;
 
-public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder>{
+public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> {
     private Context context;
     private List<com.example.projekt.models.Task> tasks;
     private Card card;
 
-    public TasksAdapter(Context context, List<com.example.projekt.models.Task> tasks, Card card){
+    public TasksAdapter(Context context, List<com.example.projekt.models.Task> tasks, Card card) {
         this.context = context;
         this.tasks = tasks;
         this.card = card;
@@ -85,7 +85,8 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder>{
 
                                         }
                                     });
-
+                                    tasks.add(task);
+                                    notifyItemInserted(tasks.size()-1);
                                 }
                             })
 
@@ -126,13 +127,13 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder>{
         private TextView tvTaskName;
         private TextView tvAddTask;
 
-        public ViewHolder(@NonNull View itemView){
+        public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvTaskName = itemView.findViewById(R.id.tvTaskName);
             tvAddTask = itemView.findViewById(R.id.tvAddTask);
         }
 
-        public void bind(com.example.projekt.models.Task task){
+        public void bind(com.example.projekt.models.Task task) {
             tvTaskName.setText(task.getName());
 
         }

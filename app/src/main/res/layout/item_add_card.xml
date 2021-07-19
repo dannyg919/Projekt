@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="22dp"
+        android:layout_marginTop="0dp"
         android:clickable="true"
         android:text="+ New Card"
         android:textColor="#8BC34A"

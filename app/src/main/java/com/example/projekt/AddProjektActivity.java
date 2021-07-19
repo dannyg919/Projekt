@@ -2,6 +2,7 @@ package com.example.projekt;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,6 +13,8 @@ import com.example.projekt.models.Projekt;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
+
+import org.parceler.Parcels;
 
 public class AddProjektActivity extends AppCompatActivity {
     EditText etProjektName;
@@ -55,7 +58,10 @@ public class AddProjektActivity extends AppCompatActivity {
                 }
                 etProjektName.setText("");
 
-                //TODO: Take user to newly created projekt
+                Intent i = new Intent(AddProjektActivity.this, ProjektActivity.class);
+                i.putExtra("DETAILS", Parcels.wrap(projekt));
+                startActivity(i);
+                finish();
             }
         });
 

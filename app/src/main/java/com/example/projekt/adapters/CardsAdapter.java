@@ -92,8 +92,12 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> 
                                                 Toast.makeText(context, "Error while saving!", Toast.LENGTH_SHORT).show();
                                             }
 
+
                                         }
                                     });
+                                    cards.add(card);
+                                    notifyItemInserted(cards.size()-1);
+                                    
 
                                 }
                             })
@@ -130,14 +134,13 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> 
         notifyDataSetChanged();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView tvCardName;
         private TextView tvNewCard;
         private RecyclerView rvTasks;
 
         private List<Task> allTasks;
         private TasksAdapter tasksAdapter;
-
 
 
         public ViewHolder(@NonNull View itemView) {
@@ -154,7 +157,7 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> 
             allTasks = new ArrayList<>();
             tasksAdapter = new TasksAdapter(context, allTasks, card);
             rvTasks.setAdapter(tasksAdapter);
-            rvTasks.setLayoutManager(new GridLayoutManager(context,2));
+            rvTasks.setLayoutManager(new GridLayoutManager(context, 2));
 
             queryTasks(card);
 

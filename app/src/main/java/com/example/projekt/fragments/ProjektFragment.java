@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -44,7 +45,17 @@ public class ProjektFragment extends Fragment {
         rvProjekts.setAdapter(projektAdapter);
         rvProjekts.setLayoutManager(new LinearLayoutManager(getContext()));
 
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        projektAdapter.clear();
+
         queryProjekts();
+
+        projektAdapter.notifyDataSetChanged();
     }
 
     private void queryProjekts() {
