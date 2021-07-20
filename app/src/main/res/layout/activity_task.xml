@@ -12,8 +12,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="23dp"
-        android:layout_marginTop="35dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="25dp"
         android:textSize="28sp"
         android:textStyle="bold"
         tools:text="Flixster" />
@@ -24,19 +24,18 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvTaskName"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="22dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="18dp"
         android:text="Activity"
         android:textSize="20sp"
         android:textStyle="bold" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvTaskActivity"
-        android:layout_width="356dp"
-        android:layout_height="234dp"
+        android:layout_width="340dp"
+        android:layout_height="325dp"
         android:layout_below="@+id/tvActivity"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="26dp"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="3dp" />
 
     <Button
@@ -45,7 +44,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/rvTaskActivity"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="10dp"
         android:text="Log Time" />
 
     <Button
@@ -54,6 +53,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/btnLogTime"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="18dp"
+        android:layout_marginTop="10dp"
         android:text="Concentration Mode" />
 </RelativeLayout>

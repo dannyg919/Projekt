@@ -3,6 +3,7 @@ package com.example.projekt.adapters;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,10 +15,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.projekt.R;
+import com.example.projekt.TaskActivity;
 import com.example.projekt.models.Card;
 import com.example.projekt.models.Task;
 import com.parse.ParseException;
 import com.parse.SaveCallback;
+
+import org.parceler.Parcels;
 
 import java.util.List;
 
@@ -63,17 +67,16 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> 
                 @Override
                 public void onClick(View view) {
                     //Create Dialog box to create new card
-                    final EditText cardEditText = new EditText(context);
+                    final EditText taskEditText = new EditText(context);
                     AlertDialog dialog = new AlertDialog.Builder(context)
                             .setTitle("Add a new task")
-                            .setView(cardEditText)
+                            .setView(taskEditText)
 
                             .setPositiveButton("Add", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-
                                     com.example.projekt.models.Task task = new Task();
-                                    task.setName(String.valueOf(cardEditText.getText()));
+                                    task.setName(String.valueOf(taskEditText.getText()));
                                     task.setCard(card);
 
                                     task.saveInBackground(new SaveCallback() {
@@ -135,6 +138,16 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> 
 
         public void bind(com.example.projekt.models.Task task) {
             tvTaskName.setText(task.getName());
+
+            tvTaskName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(context, TaskActivity.class);
+                    i.putExtra("TASK", Parcels.wrap(task));
+                    context.startActivity(i);
+
+                }
+            });
 
         }
 
