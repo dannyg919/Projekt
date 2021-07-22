@@ -25,7 +25,7 @@ public class AddProjektActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_projekt);
 
-        etProjektName = findViewById(R.id.etProjektName);
+        etProjektName = findViewById(R.id.etStartTime);
         btnCreate = findViewById(R.id.btnCreate);
 
         btnCreate.setOnClickListener(new View.OnClickListener() {

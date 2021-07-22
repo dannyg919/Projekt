@@ -31,7 +31,7 @@ public class RegisterActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
-        etUsername = findViewById(R.id.etProjektName);
+        etUsername = findViewById(R.id.etStartTime);
         etPassword = findViewById(R.id.etDescription);
         etPasswordConfirm = findViewById(R.id.etPasswordConfirm);
         etEmail = findViewById(R.id.etEmail);
