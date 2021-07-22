@@ -2,9 +2,16 @@ package com.example.projekt;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import android.app.AlertDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -24,6 +31,8 @@ import java.util.List;
 import java.util.Locale;
 
 public class ConcentrationActivity extends AppCompatActivity {
+    public static final String CHANNEL_ID = "MainChannel";
+
     EditText etSetTime;
     TextView tvClock;
     Button btnCancel;
@@ -103,6 +112,19 @@ public class ConcentrationActivity extends AppCompatActivity {
                 task.addActivity(user.getUsername() + " worked for " + time + " minutes.");
 
 
+                //Give notification that timer has finished
+                NotificationCompat.Builder builder = new NotificationCompat.Builder(ConcentrationActivity.this, CHANNEL_ID)
+                        .setSmallIcon(R.drawable.ic_launcher_foreground)
+                        .setContentTitle("Projekt App")
+                        .setContentText("Your Concentration Mode Timer has finished")
+                        .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+                NotificationManagerCompat notificationManager = NotificationManagerCompat.from(ConcentrationActivity.this);
+
+                // notificationId is a unique int for each notification that you must define
+                notificationManager.notify(20, builder.build());
+
+                finish();
 
             }
         }.start();
@@ -130,11 +152,11 @@ public class ConcentrationActivity extends AppCompatActivity {
 
     }
 
-    private void closeKeyboard(){
+    private void closeKeyboard() {
         View view = this.getCurrentFocus();
-        if(view != null){
+        if (view != null) {
             InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(view.getWindowToken(),0);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
 
@@ -177,6 +199,5 @@ public class ConcentrationActivity extends AppCompatActivity {
         timeLeft = endTime - System.currentTimeMillis();
         startTimer();
     }
-
 
 }
