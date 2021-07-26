@@ -58,6 +58,8 @@ public class TaskActivity extends AppCompatActivity {
         rvTaskActivity.setAdapter(activityAdapter);
         rvTaskActivity.setLayoutManager(new LinearLayoutManager(this));
 
+        activityAdapter.notifyDataSetChanged();
+
         btnLogTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

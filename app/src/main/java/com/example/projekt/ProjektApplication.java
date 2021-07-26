@@ -1,12 +1,21 @@
-package com.example.projekt.models;
+package com.example.projekt;
 
 import android.app.Application;
 
+
+import android.content.Context;
+
+
+import com.example.projekt.models.Card;
 import com.example.projekt.models.Projekt;
+import com.example.projekt.models.Task;
 import com.parse.Parse;
 import com.parse.ParseObject;
 
-public class ParseApplication extends Application {
+public class ProjektApplication extends Application {
+
+    private static Context appContext;
+    public static boolean wasInBackground;
 
     public void onCreate() {
         super.onCreate();

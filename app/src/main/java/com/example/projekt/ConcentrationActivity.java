@@ -5,15 +5,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import android.app.ActivityManager;
 import android.app.AlertDialog;
+import android.app.KeyguardManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.PowerManager;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -38,6 +42,9 @@ public class ConcentrationActivity extends AppCompatActivity {
     Button btnCancel;
     Button btnStartTime;
 
+    boolean isInBackground;
+    boolean isScreenAwake;
+
     Task task;
     CountDownTimer countDownTimer;
 
@@ -45,6 +52,9 @@ public class ConcentrationActivity extends AppCompatActivity {
     long timeLeft;
     long endTime;
 
+    //TODO isRunning boolean needs to be implemented for BackPressed & horizontal viewing(visibility)
+    //TODO Send notification 5 seconds after pausing the app to come back to app. If after 10 seconds they aren't
+    //TODO unpaused, then finish the current activity.
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,13 +90,30 @@ public class ConcentrationActivity extends AppCompatActivity {
                 btnStartTime.setVisibility(View.INVISIBLE);
                 //TODO set a TextView warning to not close the app. Set a reminder to get back to work!
 
-
                 startTimer();
 
             }
         });
 
-        //TODO implement btnCancel
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO if isRunning else finish()
+                AlertDialog dialog = new AlertDialog.Builder(ConcentrationActivity.this)
+                        .setTitle("Are you sure you want to quit and lose your progress?")
+                        .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                finish();
+                            }
+                        })
+
+                        .setNegativeButton("NO", null)
+                        .create();
+                dialog.show();
+
+            }
+        });
 
 
     }
@@ -118,6 +145,8 @@ public class ConcentrationActivity extends AppCompatActivity {
                         .setContentTitle("Projekt App")
                         .setContentText("Your Concentration Mode Timer has finished")
                         .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+                        //TODO what happens on notification click???
 
                 NotificationManagerCompat notificationManager = NotificationManagerCompat.from(ConcentrationActivity.this);
 
@@ -164,7 +193,7 @@ public class ConcentrationActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-
+        //TODO add if(isRunning) else finish()
         AlertDialog dialog = new AlertDialog.Builder(ConcentrationActivity.this)
                 .setTitle("Are you sure you want to quit and lose your progress?")
                 .setPositiveButton("YES", new DialogInterface.OnClickListener() {
@@ -200,4 +229,23 @@ public class ConcentrationActivity extends AppCompatActivity {
         startTimer();
     }
 
+    @Override
+    protected void onStop() {
+        //TODO instead of onStop() we want this called ONLY when app is in the background.
+        super.onStop();
+
+        ActivityManager.RunningAppProcessInfo myProcess = new ActivityManager.RunningAppProcessInfo();
+        ActivityManager.getMyMemoryState(myProcess);
+        isInBackground = myProcess.importance != ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND;
+
+        PowerManager powerManager = (PowerManager) this.getSystemService(Context.POWER_SERVICE);
+        isScreenAwake = (Build.VERSION.SDK_INT < 20? powerManager.isScreenOn():powerManager.isInteractive());
+
+        if(isInBackground && isScreenAwake) {
+            Log.d("hello","Your application is in background state");
+            startService(new Intent(this, NotificationService.class));
+        }
+
+
+    }
 }

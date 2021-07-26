@@ -1,17 +1,24 @@
 package com.example.projekt.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.projekt.R;
 import com.example.projekt.TaskActivity;
+import com.example.projekt.models.Card;
+import com.example.projekt.models.Projekt;
 import com.example.projekt.models.Task;
+import com.parse.ParseObject;
+import com.parse.ParseUser;
 
 import org.w3c.dom.Text;
 
@@ -52,10 +59,25 @@ public class TaskActivityAdapter extends RecyclerView.Adapter<TaskActivityAdapte
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         private TextView tvActivity;
+        private ImageView ivActivityPicture;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvActivity = itemView.findViewById(R.id.tvActivity);
+            ivActivityPicture = itemView.findViewById(R.id.ivActivityPicture);
+
+            //TODO make Activity data structure its own thing (not a list in task)
+            /*
+            Glide.with(context)
+                    .load(user.getParseFile("profilePicture").getUrl())
+                    .circleCrop()
+                    .into(ivActivityPicture);
+
+             */
+
+
+
+
         }
 
     }
