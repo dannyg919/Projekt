@@ -26,8 +26,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.projekt.models.Activity;
 import com.example.projekt.models.Task;
+import com.parse.ParseException;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import org.parceler.Parcels;
 
@@ -136,8 +139,7 @@ public class ConcentrationActivity extends AppCompatActivity {
             @Override
             public void onFinish() {
                 ParseUser user = ParseUser.getCurrentUser();
-                task.addActivity(user.getUsername() + " worked for " + time + " minutes.");
-
+                saveActivity(time ,user);
 
                 //Give notification that timer has finished
                 NotificationCompat.Builder builder = new NotificationCompat.Builder(ConcentrationActivity.this, CHANNEL_ID)
@@ -180,6 +182,26 @@ public class ConcentrationActivity extends AppCompatActivity {
 
 
     }
+
+
+    private void saveActivity(String timeWorked, ParseUser user){
+        Activity activity = new Activity();
+        activity.setTask(task);
+        activity.setUser(user);
+
+        activity.setContent(user.getUsername() + " worked for " + timeWorked + " minutes.");
+
+        activity.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e != null) {
+
+                }
+
+            }
+        });
+    }
+
 
     private void closeKeyboard() {
         View view = this.getCurrentFocus();
@@ -242,7 +264,7 @@ public class ConcentrationActivity extends AppCompatActivity {
         isScreenAwake = (Build.VERSION.SDK_INT < 20? powerManager.isScreenOn():powerManager.isInteractive());
 
         if(isInBackground && isScreenAwake) {
-            Log.d("hello","Your application is in background state");
+            Log.d("hello","Application is in background state");
             startService(new Intent(this, NotificationService.class));
         }
 

@@ -30,16 +30,5 @@ public class Task extends ParseObject {
         put(KEY_CARD, card);
     }
 
-    public List<String> getActivity() {return getList(KEY_ACTIVITY); }
-
-    public void setActivity(List<String> activity) {
-        put(KEY_ACTIVITY,activity);
-    }
-
-    public void addActivity(String activity){
-        add(KEY_ACTIVITY,activity);
-        saveInBackground();
-
-    }
 
 }

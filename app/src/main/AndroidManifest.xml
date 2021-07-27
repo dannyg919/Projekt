@@ -13,7 +13,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Projekt">
-        <activity android:name=".ConcentrationActivity"></activity>
+
+        <activity
+            android:name=".ConcentrationActivity"
+            android:screenOrientation="portrait"
+            ></activity>
+
         <activity android:name=".TaskActivity" />
         <activity android:name=".ProjektActivity" />
         <activity android:name=".AddProjektActivity" />

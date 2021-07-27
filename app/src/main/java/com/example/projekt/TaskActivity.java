@@ -17,9 +17,13 @@ import android.widget.Toast;
 
 import com.example.projekt.adapters.CardsAdapter;
 import com.example.projekt.adapters.TaskActivityAdapter;
+import com.example.projekt.models.Activity;
 import com.example.projekt.models.Card;
+import com.example.projekt.models.Projekt;
 import com.example.projekt.models.Task;
+import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
@@ -34,6 +38,8 @@ public class TaskActivity extends AppCompatActivity {
     RecyclerView rvTaskActivity;
     Button btnLogTime;
     Button btnConcentration;
+
+    List<Activity> allActivity;
     Task task;
 
 
@@ -54,16 +60,19 @@ public class TaskActivity extends AppCompatActivity {
 
         tvTaskName.setText(task.getName());
 
-        activityAdapter = new TaskActivityAdapter(this, task);
+        allActivity = new ArrayList<>();
+        activityAdapter = new TaskActivityAdapter(this,allActivity, task);
         rvTaskActivity.setAdapter(activityAdapter);
         rvTaskActivity.setLayoutManager(new LinearLayoutManager(this));
 
-        activityAdapter.notifyDataSetChanged();
+
+
 
         btnLogTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final EditText timeEditText = new EditText(TaskActivity.this);
+                //TODO make this EditText only accept numbers
                 AlertDialog dialog = new AlertDialog.Builder(TaskActivity.this)
                         .setTitle("How long did you work for?")
                         .setView(timeEditText)
@@ -74,11 +83,11 @@ public class TaskActivity extends AppCompatActivity {
 
 
                                 ParseUser user = ParseUser.getCurrentUser();
-                                String time = timeEditText.getText().toString();
+                                String timeWorked = timeEditText.getText().toString();
 
-                                task.addActivity(user.getUsername() + " worked for " + time);
+                                saveActivity(timeWorked,user);
 
-                                activityAdapter.notifyDataSetChanged();
+
 
 
                             }
@@ -102,6 +111,46 @@ public class TaskActivity extends AppCompatActivity {
             }
         });
 
+        queryActivity();
 
+    }
+
+    private void queryActivity() {
+        ParseQuery<Activity> query = ParseQuery.getQuery(Activity.class);
+
+        query.whereEqualTo(Activity.KEY_TASK, task);
+
+        query.addDescendingOrder("createdAt");
+        query.findInBackground(new FindCallback<Activity>() {
+            @Override
+            public void done(List<Activity> activities, ParseException e) {
+                // check for errors
+                if (e != null) {
+                    return;
+                }
+
+
+                allActivity.addAll(activities);
+                activityAdapter.notifyDataSetChanged();
+            }
+        });
+    }
+
+    private void saveActivity(String timeWorked, ParseUser user){
+        Activity activity = new Activity();
+        activity.setTask(task);
+        activity.setUser(user);
+
+        activity.setContent(user.getUsername() + " worked for " + timeWorked + " minutes.");
+
+        activity.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e != null) {
+
+                }
+
+            }
+        });
     }
 }

@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.projekt.R;
 import com.example.projekt.TaskActivity;
+import com.example.projekt.models.Activity;
 import com.example.projekt.models.Card;
 import com.example.projekt.models.Projekt;
 import com.example.projekt.models.Task;
@@ -26,11 +27,13 @@ import java.util.List;
 
 public class TaskActivityAdapter extends RecyclerView.Adapter<TaskActivityAdapter.ViewHolder> {
     Context context;
+    List<Activity> activities;
     Task task;
 
 
-    public TaskActivityAdapter(Context context,Task task){
+    public TaskActivityAdapter(Context context, List<Activity> activities, Task task) {
         this.context = context;
+        this.activities = activities;
         this.task = task;
     }
 
@@ -46,18 +49,18 @@ public class TaskActivityAdapter extends RecyclerView.Adapter<TaskActivityAdapte
 
     @Override
     public void onBindViewHolder(@NonNull TaskActivityAdapter.ViewHolder holder, int position) {
-        List<String> activity = task.getActivity();
-        String currentActivity = activity.get(position);
-        holder.tvActivity.setText(currentActivity);
+
+        Activity activity = activities.get(position);
+        holder.bind(activity);
 
     }
 
     @Override
     public int getItemCount() {
-        return task.getActivity().size();
+        return activities.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView tvActivity;
         private ImageView ivActivityPicture;
 
@@ -66,19 +69,24 @@ public class TaskActivityAdapter extends RecyclerView.Adapter<TaskActivityAdapte
             tvActivity = itemView.findViewById(R.id.tvActivity);
             ivActivityPicture = itemView.findViewById(R.id.ivActivityPicture);
 
-            //TODO make Activity data structure its own thing (not a list in task)
-            /*
+
+        }
+
+        public void bind(Activity activity) {
+            ParseUser user = activity.getParseUser("user");
+
+            user.fetchInBackground();
+
+            tvActivity.setText(activity.getContent());
+
             Glide.with(context)
-                    .load(user.getParseFile("profilePicture").getUrl())
+                    //TODO change this to use user.getProfilePicture etc.
+                    .load(R.drawable.default_profile_pic)
                     .circleCrop()
                     .into(ivActivityPicture);
-
-             */
-
 
 
 
         }
-
     }
 }

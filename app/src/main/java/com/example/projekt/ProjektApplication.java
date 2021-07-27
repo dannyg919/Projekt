@@ -6,6 +6,7 @@ import android.app.Application;
 import android.content.Context;
 
 
+import com.example.projekt.models.Activity;
 import com.example.projekt.models.Card;
 import com.example.projekt.models.Projekt;
 import com.example.projekt.models.Task;
@@ -23,6 +24,7 @@ public class ProjektApplication extends Application {
         ParseObject.registerSubclass(Projekt.class);
         ParseObject.registerSubclass(Card.class);
         ParseObject.registerSubclass(Task.class);
+        ParseObject.registerSubclass(Activity.class);
 
         Parse.initialize(new Parse.Configuration.Builder(this)
                 .applicationId("omymch9acwgh4ZeW9X3T34ATaRPRY40EyCqA6PKc")
