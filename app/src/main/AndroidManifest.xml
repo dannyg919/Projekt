@@ -5,6 +5,14 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <queries>
+
+        <!-- Camera -->
+        <intent>
+            <action android:name="android.media.action.IMAGE_CAPTURE" />
+        </intent>
+    </queries>
+
     <application
         android:name=".ProjektApplication"
         android:allowBackup="true"
@@ -13,12 +21,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Projekt">
-
+        <activity android:name=".ProfilePictureActivity"></activity>
         <activity
             android:name=".ConcentrationActivity"
-            android:screenOrientation="portrait"
-            ></activity>
-
+            android:screenOrientation="portrait" />
         <activity android:name=".TaskActivity" />
         <activity android:name=".ProjektActivity" />
         <activity android:name=".AddProjektActivity" />
@@ -42,9 +48,15 @@
             </intent-filter>
         </service>
 
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.projekt"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/fileprovider" />
+        </provider>
     </application>
-
-
-
 
 </manifest>

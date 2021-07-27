@@ -1,5 +1,6 @@
 package com.example.projekt.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.example.projekt.ProfilePictureActivity;
 import com.example.projekt.R;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
@@ -42,6 +44,13 @@ public class ProfileFragment extends Fragment {
                 .circleCrop()
                 .into(ivProfilePicture);
 
+        ivProfilePicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getContext(), ProfilePictureActivity.class);
+                startActivity(i);
+            }
+        });
 
 
 

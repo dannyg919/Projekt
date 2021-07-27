@@ -1,7 +1,6 @@
 package com.example.projekt.adapters;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,15 +12,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.projekt.R;
-import com.example.projekt.TaskActivity;
 import com.example.projekt.models.Activity;
-import com.example.projekt.models.Card;
-import com.example.projekt.models.Projekt;
 import com.example.projekt.models.Task;
-import com.parse.ParseObject;
+import com.parse.GetCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -73,18 +69,28 @@ public class TaskActivityAdapter extends RecyclerView.Adapter<TaskActivityAdapte
         }
 
         public void bind(Activity activity) {
-            ParseUser user = activity.getParseUser("user");
+            String userID = activity.getUser().getObjectId();
 
-            user.fetchInBackground();
+
+            ParseQuery<ParseUser> query = ParseQuery.getQuery("_User");
+            query.getInBackground(userID, new GetCallback<ParseUser>() {
+                public void done(ParseUser user, ParseException e) {
+                    if (e != null) {
+                        //error
+                    }
+
+                    Glide.with(context)
+
+                            .load(user.getParseFile("profilePicture").getUrl())
+                            .circleCrop()
+                            .into(ivActivityPicture);
+
+                }
+            });
+
 
             tvActivity.setText(activity.getContent());
-
-            Glide.with(context)
-                    //TODO change this to use user.getProfilePicture etc.
-                    .load(R.drawable.default_profile_pic)
-                    .circleCrop()
-                    .into(ivActivityPicture);
-
+            ;
 
 
         }
