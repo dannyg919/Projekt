@@ -189,7 +189,7 @@ public class ConcentrationActivity extends AppCompatActivity {
         activity.setTask(task);
         activity.setUser(user);
 
-        activity.setContent(user.getUsername() + " worked for " + timeWorked + " minutes.");
+        activity.setContent(user.getUsername() + " worked for " + timeWorked + " minutes in Concentration Mode.");
 
         activity.saveInBackground(new SaveCallback() {
             @Override
@@ -253,7 +253,7 @@ public class ConcentrationActivity extends AppCompatActivity {
 
     @Override
     protected void onStop() {
-        //TODO instead of onStop() we want this called ONLY when app is in the background.
+
         super.onStop();
 
         ActivityManager.RunningAppProcessInfo myProcess = new ActivityManager.RunningAppProcessInfo();
