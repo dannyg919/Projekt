@@ -42,5 +42,7 @@ dependencies {
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
     implementation 'org.parceler:parceler-api:1.1.12'
     annotationProcessor 'org.parceler:parceler:1.1.12'
+    implementation 'com.facebook.android:facebook-android-sdk:[5,6)'
+    implementation "com.github.parse-community.Parse-SDK-Android:facebook:1.25.0"
 
 }

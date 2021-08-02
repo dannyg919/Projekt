@@ -18,6 +18,7 @@ import com.parse.ParseFile;
 import com.parse.ParseUser;
 
 public class ProfileFragment extends Fragment {
+    TextView tvName;
     TextView tvUsername;
     ImageView ivProfilePicture;
 
@@ -32,10 +33,12 @@ public class ProfileFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
+        tvName = view.findViewById(R.id.tvName);
         tvUsername = view.findViewById(R.id.tvUsername);
         ivProfilePicture = view.findViewById(R.id.ivProfilePicture);
 
         ParseUser user = ParseUser.getCurrentUser();
+        tvName.setText(user.getString("firstName") + " " + user.getString("lastName"));
         tvUsername.setText(user.getUsername());
 
 

@@ -16,13 +16,14 @@ import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
 public class RegisterActivity extends AppCompatActivity {
+    private EditText etFirst;
+    private EditText etLast;
     private EditText etUsername;
     private EditText etPassword;
     private EditText etPasswordConfirm;
     private EditText etEmail;
     private Button btnRegister;
     private TextView tvLogin;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +32,8 @@ public class RegisterActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
+        etFirst = findViewById(R.id.etFirst);
+        etLast = findViewById(R.id.etLast);
         etUsername = findViewById(R.id.etStartTime);
         etPassword = findViewById(R.id.etDescription);
         etPasswordConfirm = findViewById(R.id.etPasswordConfirm);
@@ -54,6 +57,8 @@ public class RegisterActivity extends AppCompatActivity {
                 String password = etPassword.getText().toString();
                 String passwordConfirm = etPasswordConfirm.getText().toString();
                 String email = etEmail.getText().toString();
+                String first = etFirst.getText().toString();
+                String last = etLast.getText().toString();
 
                 if (password.length() < 8) {
                     Toast.makeText(RegisterActivity.this, "Password must be at least 8 characters!", Toast.LENGTH_SHORT).show();
@@ -64,6 +69,8 @@ public class RegisterActivity extends AppCompatActivity {
                     // Set core properties
                     user.setUsername(username);
                     user.setPassword(password);
+                    user.put("firstName",first);
+                    user.put("lastName",last);
                     user.setEmail(email);
 
                     user.signUpInBackground(new SignUpCallback() {

@@ -141,7 +141,9 @@ public class TaskActivity extends AppCompatActivity {
         activity.setTask(task);
         activity.setUser(user);
 
-        activity.setContent(user.getUsername() + " worked for " + timeWorked + " minutes.");
+
+
+        activity.setContent(user.getString("firstName") + " worked for " + timeWorked + " minutes.");
 
         activity.saveInBackground(new SaveCallback() {
             @Override

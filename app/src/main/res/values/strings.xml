@@ -2,4 +2,11 @@
     <string name="app_name">Projekt</string>
     <string name="channel_name">Concentration Channel</string>
     <string name="channel_description">Notification channel used in concentration mode</string>
+
+    <string name="facebook_app_id">931946340996978</string>
+    <string name="facebook_client_token">09a9ba09aa3a850b3b82a2d041dc1a5b</string>
+
+    <string name="fb_login_protocol_scheme">fb931946340996978</string>
+
+
 </resources>

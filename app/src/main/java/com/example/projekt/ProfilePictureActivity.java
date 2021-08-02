@@ -107,7 +107,7 @@ public class ProfilePictureActivity extends AppCompatActivity {
         Intent intent = new Intent(Intent.ACTION_PICK,
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 
-        if (intent.resolveActivity(getPackageManager()) != null) {
+        if (intent.resolveActivity(this.getPackageManager()) != null) {
 
             startActivityForResult(intent, IMAGE_GALLERY_REQUEST_CODE);
         }
@@ -246,22 +246,6 @@ public class ProfilePictureActivity extends AppCompatActivity {
         return image;
     }
 
-    public static String getPath(Context context, Uri uri ) {
-        String result = null;
-        String[] proj = { MediaStore.Images.Media.DATA };
-        Cursor cursor = context.getContentResolver( ).query( uri, proj, null, null, null );
-        if(cursor != null){
-            if ( cursor.moveToFirst( ) ) {
-                int column_index = cursor.getColumnIndexOrThrow( proj[0] );
-                result = cursor.getString( column_index );
-            }
-            cursor.close( );
-        }
-        if(result == null) {
-            result = "Not found";
-        }
-        return result;
-    }
 
     private void setImage(ParseUser currentUser, File photoFile) {
         currentUser.put("profilePicture", new ParseFile(photoFile));

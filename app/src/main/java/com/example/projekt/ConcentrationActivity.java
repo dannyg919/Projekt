@@ -189,7 +189,7 @@ public class ConcentrationActivity extends AppCompatActivity {
         activity.setTask(task);
         activity.setUser(user);
 
-        activity.setContent(user.getUsername() + " worked for " + timeWorked + " minutes in Concentration Mode.");
+        activity.setContent(user.getString("firstName") + " worked for " + timeWorked + " minutes in Concentration Mode.");
 
         activity.saveInBackground(new SaveCallback() {
             @Override

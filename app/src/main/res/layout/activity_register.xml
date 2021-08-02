@@ -7,6 +7,29 @@
     tools:context=".RegisterActivity">
 
 
+    <EditText
+        android:id="@+id/etLast"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etFirst"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp"
+        android:hint="LastName"
+        android:inputType="text">
+
+    </EditText>
+
+    <EditText
+        android:id="@+id/etFirst"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="130dp"
+        android:hint="First Name"
+        android:inputType="text">
+
+    </EditText>
 
     <EditText
         android:id="@+id/etEmail"
@@ -36,9 +59,9 @@
         android:id="@+id/etStartTime"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/etLast"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="175dp"
+        android:layout_marginTop="14dp"
         android:hint="Username"
         android:inputType="text">
 

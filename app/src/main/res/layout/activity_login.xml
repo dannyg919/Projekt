@@ -7,13 +7,24 @@
     tools:context=".LoginActivity">
 
 
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/btnFBLogin"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="200dp"
+        android:layout_marginBottom="30dp"
+        android:textSize="18sp" />
+
     <EditText
         android:id="@+id/etStartTime"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/btnFBLogin"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="250dp"
+        android:layout_marginTop="50dp"
         android:hint="Phone number, email or username"
         android:inputType="text" />
 
