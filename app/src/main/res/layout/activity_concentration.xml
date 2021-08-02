@@ -54,4 +54,15 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:text="Set Time" />
+
+    <TextView
+        android:id="@+id/tvMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvTitle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp"
+        android:text="Get to work!"
+        android:textSize="24sp"
+        android:visibility="invisible" />
 </RelativeLayout>

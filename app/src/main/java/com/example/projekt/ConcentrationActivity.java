@@ -42,6 +42,7 @@ public class ConcentrationActivity extends AppCompatActivity {
 
     EditText etSetTime;
     TextView tvClock;
+    TextView tvMessage;
     Button btnCancel;
     Button btnStartTime;
 
@@ -55,9 +56,8 @@ public class ConcentrationActivity extends AppCompatActivity {
     long timeLeft;
     long endTime;
 
-    //TODO isRunning boolean needs to be implemented for BackPressed & horizontal viewing(visibility)
-    //TODO Send notification 5 seconds after pausing the app to come back to app. If after 10 seconds they aren't
-    //TODO unpaused, then finish the current activity.
+    boolean isRunning = false;
+    //TODO Send notification 10 seconds after they aren't unpaused, then finish the current activity.
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +66,7 @@ public class ConcentrationActivity extends AppCompatActivity {
 
         etSetTime = findViewById(R.id.etStartTime);
         tvClock = findViewById(R.id.tvClock);
+        tvMessage = findViewById(R.id.tvMessage);
         btnCancel = findViewById(R.id.btnCancel);
         btnStartTime = findViewById(R.id.btnSetTime);
 
@@ -76,12 +77,17 @@ public class ConcentrationActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 String input = etSetTime.getText().toString();
-                //TODO check input for empty
+                if (input.isEmpty()){
+                    Toast.makeText(ConcentrationActivity.this, "Time cannot be empty",Toast.LENGTH_SHORT);
+                    return;
+                }
 
 
                 long inputTime = Long.parseLong(input) * 60000;
 
-                //TODO check input > 0
+                if (inputTime < 0){
+                    Toast.makeText(ConcentrationActivity.this, "Please enter a positive number", Toast.LENGTH_SHORT);
+                }
 
                 timeLeft = inputTime;
                 time = input;
@@ -91,7 +97,7 @@ public class ConcentrationActivity extends AppCompatActivity {
                 etSetTime.setText("");
                 etSetTime.setVisibility(View.INVISIBLE);
                 btnStartTime.setVisibility(View.INVISIBLE);
-                //TODO set a TextView warning to not close the app. Set a reminder to get back to work!
+                tvMessage.setVisibility(View.VISIBLE);
 
                 startTimer();
 
@@ -101,19 +107,25 @@ public class ConcentrationActivity extends AppCompatActivity {
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO if isRunning else finish()
-                AlertDialog dialog = new AlertDialog.Builder(ConcentrationActivity.this)
-                        .setTitle("Are you sure you want to quit and lose your progress?")
-                        .setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                finish();
-                            }
-                        })
+                if(isRunning) {
+                    AlertDialog dialog = new AlertDialog.Builder(ConcentrationActivity.this)
+                            .setTitle("Are you sure you want to quit and lose your progress?")
+                            .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    countDownTimer.cancel();
+                                    finish();
+                                }
+                            })
 
-                        .setNegativeButton("NO", null)
-                        .create();
-                dialog.show();
+                            .setNegativeButton("NO", null)
+                            .create();
+                    dialog.show();
+                }
+                else{
+                    countDownTimer.cancel();
+                    finish();
+                }
 
             }
         });
@@ -126,6 +138,7 @@ public class ConcentrationActivity extends AppCompatActivity {
     //Also gets the current ending time for the current time left.
     private void startTimer() {
         Log.i("hello", "START");
+        isRunning = true;
         endTime = System.currentTimeMillis() + timeLeft;
 
         countDownTimer = new CountDownTimer(timeLeft, 1000) {
@@ -215,19 +228,25 @@ public class ConcentrationActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-        //TODO add if(isRunning) else finish()
-        AlertDialog dialog = new AlertDialog.Builder(ConcentrationActivity.this)
-                .setTitle("Are you sure you want to quit and lose your progress?")
-                .setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        finish();
-                    }
-                })
+        if(isRunning) {
+            AlertDialog dialog = new AlertDialog.Builder(ConcentrationActivity.this)
+                    .setTitle("Are you sure you want to quit and lose your progress?")
+                    .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            countDownTimer.cancel();
+                            finish();
+                        }
+                    })
 
-                .setNegativeButton("NO", null)
-                .create();
-        dialog.show();
+                    .setNegativeButton("NO", null)
+                    .create();
+            dialog.show();
+        }
+        else {
+            countDownTimer.cancel();
+            finish();
+        }
 
     }
 
