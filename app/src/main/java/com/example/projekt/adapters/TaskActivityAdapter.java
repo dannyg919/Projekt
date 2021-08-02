@@ -90,7 +90,7 @@ public class TaskActivityAdapter extends RecyclerView.Adapter<TaskActivityAdapte
 
 
             tvActivity.setText(activity.getContent());
-            ;
+
 
 
         }

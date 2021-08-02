@@ -78,7 +78,7 @@ public class ConcentrationActivity extends AppCompatActivity {
 
                 String input = etSetTime.getText().toString();
                 if (input.isEmpty()){
-                    Toast.makeText(ConcentrationActivity.this, "Time cannot be empty",Toast.LENGTH_SHORT);
+                    Toast.makeText(ConcentrationActivity.this, "Time cannot be empty",Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -86,7 +86,7 @@ public class ConcentrationActivity extends AppCompatActivity {
                 long inputTime = Long.parseLong(input) * 60000;
 
                 if (inputTime < 0){
-                    Toast.makeText(ConcentrationActivity.this, "Please enter a positive number", Toast.LENGTH_SHORT);
+                    Toast.makeText(ConcentrationActivity.this, "Please enter a positive number", Toast.LENGTH_SHORT).show();
                 }
 
                 timeLeft = inputTime;
