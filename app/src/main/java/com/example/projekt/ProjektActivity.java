@@ -1,14 +1,21 @@
 package com.example.projekt;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.projekt.adapters.CardsAdapter;
 import com.example.projekt.adapters.ProjektsAdapter;
@@ -52,6 +59,9 @@ public class ProjektActivity extends AppCompatActivity {
         SnapHelper helper = new LinearSnapHelper();
         helper.attachToRecyclerView(rvCards);
 
+
+
+
         queryCards();
 
     }
@@ -77,6 +87,30 @@ public class ProjektActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.projekt_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.addMember) {
+            Intent i = new Intent(this, AddMemberActivity.class);
+            i.putExtra("projekt",Parcels.wrap(projekt));
+            startActivity(i);
+
+        }
+        if(item.getItemId() == R.id.archive){
+
+        }
+        if (item.getItemId() == R.id.delete){
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 
 
 }

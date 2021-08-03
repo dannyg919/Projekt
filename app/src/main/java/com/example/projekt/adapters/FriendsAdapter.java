@@ -18,12 +18,11 @@ import com.parse.ParseUser;
 
 import java.util.List;
 
-public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHolder>{
+public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHolder> {
 
     Context context;
     List<ParseUser> friends;
-
-    public FriendsAdapter(Context context, List<ParseUser> friends){
+    public FriendsAdapter(Context context, List<ParseUser> friends) {
         this.context = context;
         this.friends = friends;
     }
@@ -34,7 +33,6 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
         View view;
 
         view = LayoutInflater.from(context).inflate(R.layout.item_friend, parent, false);
-
         return new FriendsAdapter.ViewHolder(view);
     }
 
@@ -57,7 +55,7 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
         private TextView tvFriendUsername;
         private ImageView ivFriendPicture;
 
-        public ViewHolder(@NonNull View itemView){
+        public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             tvFriendName = itemView.findViewById(R.id.tvFriendName);
@@ -74,7 +72,6 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
                     .load(friend.getParseFile("profilePicture").getUrl())
                     .circleCrop()
                     .into(ivFriendPicture);
-
 
 
         }

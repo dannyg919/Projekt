@@ -5,6 +5,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -62,6 +64,8 @@ public class ProjektFragment extends Fragment {
         ParseQuery<Projekt> query = ParseQuery.getQuery(Projekt.class);
         // show only projekts for this user
         ParseUser user = ParseUser.getCurrentUser();
+
+        //TODO check workers list instead of just owner
         query.whereEqualTo(Projekt.KEY_OWNER, user);
 
         // order posts by creation date (newest first)

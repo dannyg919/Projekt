@@ -5,12 +5,15 @@ import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
+import java.util.List;
+
 @ParseClassName("Projekt")
 
 public class Projekt extends ParseObject {
     public static final String KEY_DESCRIPTION = "description";
     public static final String KEY_NAME = "name";
     public static final String KEY_OWNER = "owner";
+    public static final String KEY_MEMBERS = "membersList";
 
     public String getDescription() {
         return getString(KEY_DESCRIPTION);
@@ -35,5 +38,9 @@ public class Projekt extends ParseObject {
     public void setUser(ParseUser user) {
         put(KEY_OWNER, user);
     }
+
+    public List<ParseUser> getMembers(){return getList(KEY_MEMBERS);}
+
+    public void setMembers(List<ParseUser> members) { put(KEY_MEMBERS, members);}
 
 }
