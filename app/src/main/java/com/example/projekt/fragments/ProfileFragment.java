@@ -121,11 +121,18 @@ public class ProfileFragment extends Fragment {
 
 
     private void queryFriends() {
+
         ParseQuery<ParseUser> query = ParseUser.getQuery();
 
         ParseUser currentUser = ParseUser.getCurrentUser();
 
-        query.whereContainedIn("objectId", currentUser.getList("friendsList"));
+        List<String> list =  new ArrayList<>();
+
+        if(currentUser.getList("friendsList") != null){
+            list = currentUser.getList("friendsList");
+        }
+
+        query.whereContainedIn("objectId", list);
 
 
         query.findInBackground(new FindCallback<ParseUser>() {
@@ -173,7 +180,10 @@ public class ProfileFragment extends Fragment {
                         ParseUser.getCurrentUser().saveInBackground();
 
                     } else {
-                        ParseUser.getCurrentUser().put("friendsList", list.get(0).getObjectId());
+                        List<String> singleFriend = new ArrayList<>();
+                        singleFriend.add(list.get(0).getObjectId());
+
+                        ParseUser.getCurrentUser().put("friendsList", singleFriend);
                         ParseUser.getCurrentUser().saveInBackground();
 
                     }

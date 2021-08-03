@@ -22,6 +22,7 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class ProjektFragment extends Fragment {
@@ -62,14 +63,21 @@ public class ProjektFragment extends Fragment {
 
     private void queryProjekts() {
         ParseQuery<Projekt> query = ParseQuery.getQuery(Projekt.class);
+        ParseQuery<Projekt> queryMembers = ParseQuery.getQuery(Projekt.class);
         // show only projekts for this user
         ParseUser user = ParseUser.getCurrentUser();
 
-        //TODO check workers list instead of just owner
+
+        List<ParseUser> curUser = new ArrayList<>();
+        curUser.add(user);
+
         query.whereEqualTo(Projekt.KEY_OWNER, user);
+        queryMembers.whereContainedIn(Projekt.KEY_MEMBERS, curUser);
+
 
         // order posts by creation date (newest first)
         query.addDescendingOrder("createdAt");
+        queryMembers.addDescendingOrder("createdAt");
         // start an asynchronous call for posts
         query.findInBackground(new FindCallback<Projekt>() {
             @Override
@@ -83,6 +91,21 @@ public class ProjektFragment extends Fragment {
                 projektAdapter.notifyDataSetChanged();
             }
         });
+
+        queryMembers.findInBackground(new FindCallback<Projekt>() {
+            @Override
+            public void done(List<Projekt> projekts, ParseException e) {
+                // check for errors
+                if (e != null) {
+                    return;
+                }
+
+                allProjekts.addAll(projekts);
+                projektAdapter.notifyDataSetChanged();
+
+            }
+        });
+
     }
 
 }
