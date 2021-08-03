@@ -107,10 +107,9 @@ public class ProfilePictureActivity extends AppCompatActivity {
         Intent intent = new Intent(Intent.ACTION_PICK,
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 
-        if (intent.resolveActivity(this.getPackageManager()) != null) {
 
-            startActivityForResult(intent, IMAGE_GALLERY_REQUEST_CODE);
-        }
+        startActivityForResult(intent, IMAGE_GALLERY_REQUEST_CODE);
+
 
     }
 
@@ -232,7 +231,7 @@ public class ProfilePictureActivity extends AppCompatActivity {
         Bitmap image = null;
         try {
             // check version of Android on device
-            if(Build.VERSION.SDK_INT > 27){
+            if (Build.VERSION.SDK_INT > 27) {
                 // on newer versions of Android, use the new decodeBitmap method
                 ImageDecoder.Source source = ImageDecoder.createSource(this.getContentResolver(), photoUri);
                 image = ImageDecoder.decodeBitmap(source);
