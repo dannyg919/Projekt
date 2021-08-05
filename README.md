@@ -28,19 +28,19 @@ Projekt is a fun Workflow app designed to get the most of your personal and team
 
 **Required Must-have Stories**
 
-* [ ] User can create an account for the platform.
-* [ ] User can log in/out to the platform.
-* [ ] User can create new projects.
-    * [ ] Archive/delete Projects
-* [ ] User can add tasks for each project.
-    * [ ] Can be prioritized by: Urgency, team, etc. 
-* [ ] User can complete/remove tasks.
-* [ ] User can add other users to a project.
-* [ ] User can add friends.
+* [x] User can create an account for the platform.
+* [x] User can log in/out to the platform.
+* [x] User can create new projects.
+    * [x] Archive/delete Projects
+* [x] User can add tasks for each project.
+    * [x] Can be prioritized by: Urgency, team, etc. 
+* [x] User can complete/remove tasks.
+* [x] User can add other users to a project.
+* [x] User can add friends.
 
-* [ ] User can log time spent on a task and update it to all team members.
-* [ ] Concentration mode ("Locks" phone when working on a task)
-* [ ] User can create a Project Hierarchy to assign project managers who have the ability to decide when tasks are completed etc.
+* [x] User can log time spent on a task and update it to all team members.
+* [x] Concentration mode ("Locks" phone when working on a task)
+
 
 **Optional Nice-to-have Stories**
 
@@ -53,6 +53,7 @@ Projekt is a fun Workflow app designed to get the most of your personal and team
     * [ ] Shows hours logged by team members
     * [ ] Shows tasks completed (late/on-time)
 * [ ] User can invite friends to the app.
+* [ ] User can create a Project Hierarchy to assign project managers who have the ability to decide when tasks are completed etc.
 
 
 ### 2. Screen Archetypes
@@ -119,12 +120,21 @@ Optional:
    | objectId      | String   | unique id for the projekt (default field) |
    | createdAt     | DateTime | date when projekt is created (default field) |
    | updatedAt     | DateTime | date when projekt is last updated (default field) |
-   | manager       | Pointer to User| owner of projekt |
-   | workers       | Pointer to List User| other users working on projek |
-   | tasks         | Pointer to List Task | points to tasks assosciated |
-   | image         | File     | image of projekt |
+   | name          | String   | name of projekt |
+   | owner         | Pointer to User | owner of projekt |
    | description   | String   | description of projekt |
-
+   | members       | Array | other users working on projekt |
+   | image         | File     | image of projekt |
+   
+#### Card(Group)
+| Property      | Type     | Description |
+   | ------------- | -------- | ------------|
+   | objectId      | String   | unique id for the card (default field) |
+   | createdAt     | DateTime | date when card is created (default field) |
+   | updatedAt     | DateTime | date when card is last updated (default field) |
+   | name          | String   | name of card |
+   | projekt         | Pointer to Projekt | projekt where this card belongs |
+   
 
 #### Tasks
 
@@ -133,10 +143,20 @@ Optional:
    | objectId      | String   | unique id for the task (default field) |
    | createdAt     | DateTime | date when task is created (default field) |
    | updatedAt     | DateTime | date when task is last updated (default field) |
-   | description   | String   | description of task |
+   | name          | String   | name of task |
+   | card          | Pointer to Card | card where this task belongs |
    | priority      | int      | priority of given task |
-   | worked on     | Pointer to List User | points to list of users who worked on task | 
     
+#### Activity
+
+| Property      | Type     | Description |
+   | ------------- | -------- | ------------|
+   | objectId      | String   | unique id for the activity (default field) |
+   | createdAt     | DateTime | date when activity is created (default field) |
+   | updatedAt     | DateTime | date when activity is last updated (default field) |
+   | content       | String   | content of activity |
+   | projekt       | Pointer to Task | task where this activity belongs |
+   | user          | Pointer to User | user associated to activity |
 
 
 #### User
@@ -148,12 +168,18 @@ Optional:
    | updatedAt     | DateTime | date when user is last updated (default field) |
    | username      | String   | username |
    | password      | String   | user's password |
-   | projekts      | Pointer to List Projekt | points to list of projekts user is working on |
+   | email         | String   | user's email |
+   | firstName     | String   | user's name |
+   | lastName      | String   | user's name |
+   | friendsList   | Array    | user's friend's IDs |
    | coins         | int   | number of coins user has to spend at store |
 
-### Models
-[Add table of models]
-### Networking
-- [Add list of network requests by screen ]
-- [Create basic snippets for each Parse network request]
-- [OPTIONAL: List endpoints if using existing API such as Yelp]
+
+### Video Walkthrough
+
+Here's a walkthrough of implemented user stories:
+
+<img src='ProjektGIF.gif' title='Video Walkthrough' width='200px' alt='Video Walkthrough' />
+
+GIF created with [Kap](https://getkap.co/).
+
