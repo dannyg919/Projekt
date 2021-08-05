@@ -1,6 +1,7 @@
 package com.example.projekt;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -11,6 +12,7 @@ import android.app.KeyguardManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -64,6 +66,9 @@ public class ConcentrationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_concentration);
 
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
+
         etSetTime = findViewById(R.id.etStartTime);
         tvClock = findViewById(R.id.tvClock);
         tvMessage = findViewById(R.id.tvMessage);
@@ -77,15 +82,15 @@ public class ConcentrationActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 String input = etSetTime.getText().toString();
-                if (input.isEmpty()){
-                    Toast.makeText(ConcentrationActivity.this, "Time cannot be empty",Toast.LENGTH_SHORT).show();
+                if (input.isEmpty()) {
+                    Toast.makeText(ConcentrationActivity.this, "Time cannot be empty", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
 
                 long inputTime = Long.parseLong(input) * 60000;
 
-                if (inputTime < 0){
+                if (inputTime < 0) {
                     Toast.makeText(ConcentrationActivity.this, "Please enter a positive number", Toast.LENGTH_SHORT).show();
                 }
 
@@ -107,7 +112,7 @@ public class ConcentrationActivity extends AppCompatActivity {
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isRunning) {
+                if (isRunning) {
                     AlertDialog dialog = new AlertDialog.Builder(ConcentrationActivity.this)
                             .setTitle("Are you sure you want to quit and lose your progress?")
                             .setPositiveButton("YES", new DialogInterface.OnClickListener() {
@@ -121,8 +126,7 @@ public class ConcentrationActivity extends AppCompatActivity {
                             .setNegativeButton("NO", null)
                             .create();
                     dialog.show();
-                }
-                else{
+                } else {
                     countDownTimer.cancel();
                     finish();
                 }
@@ -152,16 +156,26 @@ public class ConcentrationActivity extends AppCompatActivity {
             @Override
             public void onFinish() {
                 ParseUser user = ParseUser.getCurrentUser();
-                saveActivity(time ,user);
+                saveActivity(time, user);
+
+                /*
+                TaskStackBuilder stackBuilder = TaskStackBuilder.create(ConcentrationActivity.this);
+
+                stackBuilder.addNextIntent(newLauncherIntent(ConcentrationActivity.this));
+
+                PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0,
+                        PendingIntent.FLAG_UPDATE_CURRENT);
+
+                 */
 
                 //Give notification that timer has finished
                 NotificationCompat.Builder builder = new NotificationCompat.Builder(ConcentrationActivity.this, CHANNEL_ID)
-                        .setSmallIcon(R.drawable.ic_launcher_foreground)
+                        .setSmallIcon(R.drawable.clipboard_logo)
                         .setContentTitle("Projekt App")
                         .setContentText("Your Concentration Mode Timer has finished")
-                        .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-
-                        //TODO what happens on notification click???
+                        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                        //.setContentIntent(resultPendingIntent)
+                        .setAutoCancel(true);
 
                 NotificationManagerCompat notificationManager = NotificationManagerCompat.from(ConcentrationActivity.this);
 
@@ -175,6 +189,16 @@ public class ConcentrationActivity extends AppCompatActivity {
 
 
     }
+    /*
+    public static Intent newLauncherIntent(final Context context) {
+        final Intent intent = new Intent(context, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setAction(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_LAUNCHER);
+        return intent;
+    }
+
+     */
 
     //Updates the text within the TextView given timeLeftInMillis
     private void updateText() {
@@ -197,7 +221,7 @@ public class ConcentrationActivity extends AppCompatActivity {
     }
 
 
-    private void saveActivity(String timeWorked, ParseUser user){
+    private void saveActivity(String timeWorked, ParseUser user) {
         Activity activity = new Activity();
         activity.setTask(task);
         activity.setUser(user);
@@ -216,6 +240,7 @@ public class ConcentrationActivity extends AppCompatActivity {
     }
 
 
+
     private void closeKeyboard() {
         View view = this.getCurrentFocus();
         if (view != null) {
@@ -228,7 +253,7 @@ public class ConcentrationActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-        if(isRunning) {
+        if (isRunning) {
             AlertDialog dialog = new AlertDialog.Builder(ConcentrationActivity.this)
                     .setTitle("Are you sure you want to quit and lose your progress?")
                     .setPositiveButton("YES", new DialogInterface.OnClickListener() {
@@ -242,8 +267,7 @@ public class ConcentrationActivity extends AppCompatActivity {
                     .setNegativeButton("NO", null)
                     .create();
             dialog.show();
-        }
-        else {
+        } else {
             countDownTimer.cancel();
             finish();
         }
@@ -280,10 +304,10 @@ public class ConcentrationActivity extends AppCompatActivity {
         isInBackground = myProcess.importance != ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND;
 
         PowerManager powerManager = (PowerManager) this.getSystemService(Context.POWER_SERVICE);
-        isScreenAwake = (Build.VERSION.SDK_INT < 20? powerManager.isScreenOn():powerManager.isInteractive());
+        isScreenAwake = (Build.VERSION.SDK_INT < 20 ? powerManager.isScreenOn() : powerManager.isInteractive());
 
-        if(isInBackground && isScreenAwake) {
-            Log.d("hello","Application is in background state");
+        if (isInBackground && isScreenAwake) {
+            Log.d("hello", "Application is in background state");
             startService(new Intent(this, NotificationService.class));
         }
 

@@ -1,5 +1,6 @@
 package com.example.projekt;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.IntentCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -51,6 +52,10 @@ public class TaskActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
+
         tvTaskName = findViewById(R.id.tvTaskName);
         btnLogTime = findViewById(R.id.btnLogTime);
         btnConcentration = findViewById(R.id.btnConcentration);

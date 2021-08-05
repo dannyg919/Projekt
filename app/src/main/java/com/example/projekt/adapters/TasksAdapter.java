@@ -89,7 +89,7 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> 
                                         }
                                     });
                                     tasks.add(task);
-                                    notifyItemInserted(tasks.size()-1);
+                                    notifyItemInserted(tasks.size() - 1);
                                 }
                             })
 
@@ -148,6 +148,7 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> 
 
                 }
             });
+
 
         }
 

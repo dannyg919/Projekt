@@ -1,6 +1,9 @@
 package com.example.projekt;
 
+import android.app.PendingIntent;
 import android.app.Service;
+import android.app.TaskStackBuilder;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.IBinder;
@@ -52,12 +55,10 @@ public class NotificationService extends Service {
     public void startTimer() {
         //set a new Timer
         timer = new Timer();
-
-        //initialize the TimerTask's job
         initializeTimerTask();
 
-        //schedule the timer, after the first 5000ms the TimerTask will run every 10000ms
-        timer.schedule(timerTask, secondsAfter*1000); //
+
+        timer.schedule(timerTask, secondsAfter * 1000); //
 
     }
 
@@ -74,24 +75,32 @@ public class NotificationService extends Service {
         timerTask = new TimerTask() {
             public void run() {
 
-                //use a handler to run a toast that shows the current timestamp
+
                 handler.post(new Runnable() {
                     public void run() {
+                        /*
+                        TaskStackBuilder stackBuilder = TaskStackBuilder.create(NotificationService.this);
+
+                        stackBuilder.addNextIntent(newLauncherIntent(NotificationService.this));
+
+                        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0,
+                                PendingIntent.FLAG_UPDATE_CURRENT);
+
+                         */
 
                         NotificationCompat.Builder builder = new NotificationCompat.Builder(NotificationService.this, CHANNEL_ID)
-                                .setSmallIcon(R.drawable.ic_launcher_foreground)
+                                .setSmallIcon(R.drawable.clipboard_logo)
                                 .setContentTitle("Projekt App")
                                 .setContentText("Return to the app or risk losing your progress!")
-                                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+                                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                                //.setContentIntent(resultPendingIntent)
+                                .setAutoCancel(true);
 
-
-                        //TODO what happens on notification click???
 
                         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(NotificationService.this);
 
-                        // notificationId is a unique int for each notification that you must define
-                        notificationManager.notify(20, builder.build());
 
+                        notificationManager.notify(20, builder.build());
 
 
                     }
@@ -99,4 +108,14 @@ public class NotificationService extends Service {
             }
         };
     }
+    /*
+    public static Intent newLauncherIntent(final Context context) {
+        final Intent intent = new Intent(context, ConcentrationActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setAction(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_LAUNCHER);
+        return intent;
+    }
+
+     */
 }
